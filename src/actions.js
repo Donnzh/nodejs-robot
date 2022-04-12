@@ -1,7 +1,7 @@
 const { consoleOutput } = require("./utils");
 
-const placeAction = (inputLine) => {
-  const positionInfo = inputLine.slice(5).split(",");
+const placeAction = (command) => {
+  const positionInfo = command.slice(5).split(",");
   const [positionX, positionY, direction] = positionInfo;
   const isValid = isValidPlacePosition([positionX, positionY]);
 
@@ -13,13 +13,13 @@ const placeAction = (inputLine) => {
   return null;
 };
 
-const moveAction = (inputLine, position, direction) => {
+const moveAction = (command, position, direction) => {
   let newPosition = [...position];
 
-  if (inputLine === "LEFT" || inputLine === "RIGHT") {
-    direction = updateDirection(direction, inputLine);
+  if (command === "LEFT" || command === "RIGHT") {
+    direction = updateDirection(direction, command);
   }
-  if (inputLine === "MOVE") {
+  if (command === "MOVE") {
     newPosition = movePosition(position, direction);
   }
   const isValid = isValidPlacePosition(newPosition);
@@ -42,20 +42,20 @@ const reportAction = (position, direction) => {
 const isValidPlacePosition = (position) =>
   position.every((p) => parseInt(p) >= 0 && parseInt(p) <= 5);
 
-const updateDirection = (direction, inputLine) => {
+const updateDirection = (direction, command) => {
   let newDirection = "";
   switch (direction) {
     case "NORTH":
-      newDirection = inputLine === "LEFT" ? "WEST" : "EAST";
+      newDirection = command === "LEFT" ? "WEST" : "EAST";
       break;
     case "SOUTH":
-      newDirection = inputLine === "LEFT" ? "EAST" : "WEST";
+      newDirection = command === "LEFT" ? "EAST" : "WEST";
       break;
     case "WEST":
-      newDirection = inputLine === "LEFT" ? "SOUTH" : "NORTH";
+      newDirection = command === "LEFT" ? "SOUTH" : "NORTH";
       break;
     case "EAST":
-      newDirection = inputLine === "LEFT" ? "NORTH" : "SOUTH";
+      newDirection = command === "LEFT" ? "NORTH" : "SOUTH";
       break;
   }
   return newDirection;
@@ -80,4 +80,4 @@ const movePosition = (position, direction) => {
   return newPosition;
 };
 
-module.exports = { placeAction, moveAction, reportAction };
+module.exports = { placeAction, moveAction, reportAction, movePosition };

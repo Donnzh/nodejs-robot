@@ -22,15 +22,15 @@ const consoleOutput = (color, text) => {
   return;
 };
 
-const isValidInput = (round, inputs) => {
-  const placeRegExp = /PLACE[0-9],[0-9],(NORTH|WEST|EAST|SOUTH)/g;
+const isValidInput = (firstRound, inputs) => {
+  const placeRegExp = /PLACE[0-5],[0-5],(NORTH|WEST|EAST|SOUTH)/g;
   const otherRegExp = /(MOVE|LEFT|RIGHT|REPORT)/g;
-  if (round === 0) {
+  if (firstRound) {
     const isValid = placeRegExp.test(inputs);
     if (!isValid) {
       consoleOutput(
         "red",
-        "⛔️ First line input should be like 'PLACE, PositionX, PositionY, Direction', e.g 'PLACE,5,5,NORTH'"
+        "⛔️ First command should be like 'PLACE, PositionX, PositionY, Direction', e.g 'PLACE 5,5,NORTH'"
       );
     }
     return isValid;
@@ -39,14 +39,14 @@ const isValidInput = (round, inputs) => {
     if (!isValid) {
       consoleOutput(
         "red",
-        "⛔️ Please input a valid line: MOVE, LEFT, RIGHT, REPORT, or reposition the Robot using 'PLACE X,Y,Direction'"
+        "⛔️ Please input a valid command: MOVE, LEFT, RIGHT, REPORT, or reposition the Robot using 'PLACE X,Y,Direction'"
       );
     }
     return isValid;
   }
 };
 
-const isPlaceCommand = (inputLine) => inputLine.includes("PLACE");
+const isPlaceCommand = (command) => command.includes("PLACE");
 
 const robotDescription = () => {
   consoleOutput("cyan", "welcome to the game of Toy Robot");

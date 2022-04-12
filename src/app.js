@@ -7,23 +7,23 @@ const initialize = () => {
   const stdin = openStdin();
   let position = [0, 0];
   let direction = null;
-  let round = 0;
+  let firstRound = true;
   stdin.addListener("data", (data) => {
-    const inputLine = data.toString().trim().replaceAll(" ", "");
-    const isValid = isValidInput(round, inputLine);
+    const command = data.toString().trim().replace(/ /g, "");
+    const isValid = isValidInput(firstRound, command);
 
     if (isValid) {
-      round++;
-      if (isPlaceCommand(inputLine)) {
-        const placeResult = placeAction(inputLine, position, direction);
+      firstRound = false;
+      if (isPlaceCommand(command)) {
+        const placeResult = placeAction(command, position, direction);
         if (placeResult) {
           position = placeResult.newPosition;
           direction = placeResult.direction;
         }
-      } else if (inputLine === "REPORT") {
+      } else if (command === "REPORT") {
         reportAction(position, direction);
       } else {
-        const moveResult = moveAction(inputLine, position, direction);
+        const moveResult = moveAction(command, position, direction);
         if (moveResult) {
           direction = moveResult.direction;
           position = moveResult.newPosition;
@@ -33,9 +33,9 @@ const initialize = () => {
   });
 };
 
-const toyStart = () => {
+const start = () => {
   robotDescription();
   initialize();
 };
 
-toyStart();
+start();

@@ -4,15 +4,19 @@
   "description": "A toy robot simulator",
   "main": "app.js",
   "scripts": {
-    "test": "test",
+    "test": "jest",
     "start": "node ./src/app.js"
   },
   "bin": {
     "toy-robot": "src/app.js"
   },
   "keywords": [
-    "toy_robot"
+    "toy-robot"
   ],
   "author": "DonnZh",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^27.5.1",
+    "mock-stdin": "^1.0.0"
+  }
 }
